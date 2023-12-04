@@ -1,0 +1,4 @@
+MQTT_ADDRESS=127.0.0.1
+MQTT_PORT=1883
+MQTT_TOPIC="test/+/+/+"
+INFLUXDB_DB="test_db"

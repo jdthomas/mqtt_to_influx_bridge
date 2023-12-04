@@ -1,0 +1,23 @@
+[Unit]
+Description=Service to listen to mqtt and forward to influxdb
+#After=multi-user.target
+After=syslog.target influxdb.service mosquitto.service
+
+[Service]
+EnvironmentFile=/etc/jt_influx_bridge.conf
+Type=simple
+# For the old Go implementation
+# ExecStart=/usr/local/bin/mqtt680influxbridge
+# ExecStop=/bin/kill -9 $MAINPID
+# For the new rust implementation
+ExecStart=/usr/local/bin/mqtt_to_influx_bridge
+ExecStop=/bin/kill $MAINPID
+Restart=on-failure
+User=jeffthomas
+#StandardOutput=syslog
+#StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
+
+

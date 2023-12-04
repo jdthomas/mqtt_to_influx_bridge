@@ -2,6 +2,8 @@
 name = "mqtt_to_influx_bridge"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "Simple daemon to subscribe to mqtt and dump the results into an infuxdb database"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -20,3 +22,11 @@ tokio-util = "0.7.4"
 tracing = "0.1.37"
 tracing-glog = "0.2.2"
 tracing-subscriber = {version = "0.3.16", features = ["env-filter",]}
+
+
+[package.metadata.generate-rpm]
+assets = [
+    { source = "target/release/mqtt_to_influx_bridge", dest = "/usr/local/bin/mqtt_to_influx_bridge", mode = "755" },
+    { source = "jt_influx_bridge.service", dest = "/etc/systemd/system/jt_influx_bridge.service", mode = "644" },
+    { source = "jt_influx_bridge.conf.template", dest = "/etc/jt_influx_bridge.conf", mode = "600", config = true },
+]
